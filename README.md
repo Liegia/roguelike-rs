@@ -23,3 +23,11 @@ Variable are immutable by default so we need to use **_mut_** keyword to be able
 We don't have to specify the type of variable, Rust will figure it out.
 
 Like Python x,y 0,0 is the top left of the screen.
+
+A function signature in Ruat is
+
+    fn function_name(parameter: type, ...) -> return_type
+
+We can use &mut before the type to borrow operators.  
+<https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html>  
+<https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html>
