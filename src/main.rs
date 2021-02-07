@@ -31,10 +31,10 @@ fn handle_keys(tcod: &mut Tcod, player_x: &mut i32, player_y: &mut i32) -> bool 
         Key { code: Escape, .. } => return true, // exit game
 
         // movement keys
-        Key { code: w, .. } => *player_y -= 1,
-        Key { code: s, .. } => *player_y += 1,
-        Key { code: a, .. } => *player_x -= 1,
-        Key { code: d, .. } => *player_x += 1,
+        Key { code: Up, .. } => *player_y -= 1,
+        Key { code: Down, .. } => *player_y += 1,
+        Key { code: Left, .. } => *player_x -= 1,
+        Key { code: Right, .. } => *player_x += 1,
 
         _ => {}
     }
