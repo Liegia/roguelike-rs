@@ -31,3 +31,8 @@ A function signature in Ruat is
 We can use &mut before the type to borrow operators.  
 <https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html>  
 <https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html>
+
+In **_libtcod_**, console is where we _draw stuff_.  
+We can create _offscreen consoles_ and draw on them.  
+This will let us add transparency effekts or render only portions of the console.  
+It will let us stack GUI elements on top of the game window. Render the info panel, game map and so on separatly.
