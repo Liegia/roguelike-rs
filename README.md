@@ -36,3 +36,5 @@ In **_libtcod_**, console is where we _draw stuff_.
 We can create _offscreen consoles_ and draw on them.  
 This will let us add transparency effekts or render only portions of the console.  
 It will let us stack GUI elements on top of the game window. Render the info panel, game map and so on separatly.
+  
+The `dyn` keyword in `&mut dyn Console` highlights that `Console` is a **_trait_** and not a concrete type, such as `struct` or `enum`.  
