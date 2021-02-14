@@ -12,7 +12,7 @@ struct Tcod {
     con: Offscreen,
 }
 
-/// Generic object: The Player , a monster, an item, the stairs...
+/// Generic object: The Player, a monster, an item, the stairs...
 /// It's always represented by a character on screen
 struct Object {
     x: i32,
