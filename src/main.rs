@@ -12,6 +12,34 @@ struct Tcod {
     con: Offscreen,
 }
 
+/// Generic object: The Player , a monster, an item, the stairs...
+/// It's always represented by a character on screen
+struct Object {
+    x: i32,
+    y: i32,
+    char: char,
+    color: Color,
+}
+
+impl Object {
+    pub fn new(x: i32, y: i32, char: char, color: Color) -> Self {
+        Object { x, y, char, color}
+    }
+    
+    /// Move by the given amount
+    pub fn move_by(&mut self, dx: i32, dy: i32) {
+        self.y += dx;
+        self.x += dy;
+    }
+    
+    /// Set the color and then draw the character that represents this object at its position
+    pub fn draw(&self, con: &mut dyn Console) {
+        con.set_default_background(self.color);
+        con.put_char(self.x, self.y, self.char, BackgroundFlag::None);
+    }
+}
+
+
 fn handle_keys(tcod: &mut Tcod, player_x: &mut i32, player_y: &mut i32) -> bool {
     use tcod::input::Key;
     use tcod::input::KeyCode::*;
