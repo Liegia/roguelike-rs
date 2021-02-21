@@ -1,3 +1,5 @@
+///2021-02-21 K.Heidenborg
+/// Roguelike tutorial by Tomasse Dovic. tomassedovic.github.io
 use tcod::colors::*;
 use tcod::console::*;
 
@@ -45,7 +47,6 @@ fn handle_keys(tcod: &mut Tcod, player_x: &mut i32, player_y: &mut i32) -> bool 
     use tcod::input::KeyCode::*;
 
     let key = tcod.root.wait_for_keypress(true);
-
     match key {
         Key {
             code: Enter,
@@ -60,10 +61,10 @@ fn handle_keys(tcod: &mut Tcod, player_x: &mut i32, player_y: &mut i32) -> bool 
         Key { code: Escape, .. } => return true, // exit game
 
         // movement keys
-        Key { code: Up, .. } => *player_y -= 1,
-        Key { code: Down, .. } => *player_y += 1,
-        Key { code: Left, .. } => *player_x -= 1,
-        Key { code: Right, .. } => *player_x += 1,
+        Key { code: Up, .. } => player.move_by(0, -1),
+        Key { code: Down, .. } => player.move_by(0, 1),
+        Key { code: Left, .. } => player.move_by(-1, 0),
+        Key { code: Right, .. } => player.move_by(1, 0),
 
         _ => {}
     }
@@ -85,16 +86,31 @@ fn main() {
 
     let mut tcod = Tcod { root, con };
 
-    let mut player_x = SCREEN_WIDTH / 2; // Initialise to the center
-    let mut player_y = SCREEN_HEIGHT / 2; // of the screen
+    // create object representing the player
+    let player = Object::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, '@', WHITE);
+    
+    // create npc
+    let npc = Object::new(SCREEN_WIDTH / 2 - 5, SCREEN_HEIGHT / 2, '@', YELLOW);
+    
+    // the list of objects with those two
+    let mut objects = [player, npc];
+
+    // let mut player_x = SCREEN_WIDTH / 2; // Initialise to the center
+    // let mut player_y = SCREEN_HEIGHT / 2; // of the screen
 
     while !tcod.root.window_closed() {
-        tcod.con.set_default_foreground(WHITE);
-        tcod.con.clear();
-        tcod.con
-            .put_char(player_x, player_y, '@', BackgroundFlag::None);
-        tcod.root.flush();
-        tcod.root.wait_for_keypress(true);
+        // clear the screen
+        tcod.con.clear()
+        for object in &objects {
+            object.draw(&mut tocd.con);
+        }
+
+        //tcod.con.set_default_foreground(WHITE);
+        //tcod.con.clear();
+        //tcod.con
+        //    .put_char(player_x, player_y, '@', BackgroundFlag::None);
+        //tcod.root.flush();
+        //tcod.root.wait_for_keypress(true);
 
         // Blit the contetnts of "con" to the root console and present it
         blit(
@@ -106,9 +122,12 @@ fn main() {
             1.0,
             1.0,
         );
+        
+        tcod.root.flush();
 
         // Handle keys and exit game if needed
-        let exit = handle_keys(&mut tcod, &mut player_x, &mut player_y);
+        let player = &mut objects[0];
+        let exit = handle_keys(&mut tcod, player);
         if exit {
             break;
         }
